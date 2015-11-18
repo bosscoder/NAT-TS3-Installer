@@ -1,7 +1,7 @@
 #!/bin/bash
 # Easy TeamSpeak 3 installer for Debian based OS
 # TeamSpeak 3 server version 3.0.11.4
-# Tested on Debian 7 (32bit and 64bit) and Debian 8 (64bit)
+# Tested on Debian 7/8 and Ubuntu 14.04 LTS
 
 # Check supported OS
 if [ -e '/etc/redhat-release' ] ; then
