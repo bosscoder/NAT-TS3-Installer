@@ -22,4 +22,6 @@ If you need to upload your own license, you can upload your "licensekey.dat" to 
 
 ### More info please.
 Current TeamSpeak 3 server version: 3.0.11.4<br />
-Tested on Debian 7 32/64bit and Debian 8 64bit.
+Supported Operating Systems:<br />
+Debian 7/8 32/64bit<br />
+Ubuntu 14.04 32/64bit
