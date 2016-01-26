@@ -4,15 +4,15 @@
 # Tested on Debian 7/8 and Ubuntu 14.04 LTS
 
 # Check for root account
-if (whoami != root) ; then
-  echo "Error: Sorry, this installer must be ran by root account."
+if [[ "$EUID" -ne 0 ]]; then
+  echo "Sorry, you need to run this as root"
   exit 1
 fi
 
 # Check supported OS
 if [ -e '/etc/redhat-release' ] ; then
-    echo 'Error: Sorry, this installer works only on Debian or Ubuntu'
-    exit 1
+  echo 'Error: Sorry, this installer works only on Debian or Ubuntu'
+  exit 1
 fi
 
 # Get the internal IP of the server
@@ -99,9 +99,11 @@ echo ""
 read -p "Start the server now? [y/n]: " startopt
 sleep 1
 if [ "$startopt" == "y" ] || [ "$startopt" == "yes" ]; then
-    echo "Please keep the following details safe!"
-    /etc/init.d/teamspeak3 start
+  echo "Please keep the following details safe!"
+  /etc/init.d/teamspeak3 start
 else
-    echo "Run the following command to manually start the server:"
-    echo "/etc/init.d/teamspeak3 start"
+  echo "Run the following command to manually start the server:"
+  echo "/etc/init.d/teamspeak3 start"
 fi
+
+exit 0
