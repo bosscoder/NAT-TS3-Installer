@@ -3,9 +3,15 @@
 # TeamSpeak 3 server version 3.0.11.4
 # Tested on Debian 7/8 and Ubuntu 14.04 LTS
 
+# Check for root account
+if (whoami != root) ; then
+  echo "Error: Sorry, this installer must be ran by root account."
+  exit 1
+fi
+
 # Check supported OS
 if [ -e '/etc/redhat-release' ] ; then
-    echo 'Error: sorry, this installer works only on Debian or Ubuntu'
+    echo 'Error: Sorry, this installer works only on Debian or Ubuntu'
     exit 1
 fi
 
