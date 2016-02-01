@@ -1,6 +1,6 @@
 #!/bin/bash
 # Easy TeamSpeak 3 installer for Debian based OS
-# TeamSpeak 3 server version 3.0.11.4
+# TeamSpeak 3 server version 3.0.12
 # Tested on Debian 7/8 and Ubuntu 14.04 LTS
 
 # Check for root account
@@ -35,7 +35,7 @@ read -p "Enter desired Server Query Admin password: " apass
 
 # Install required packages
 apt-get update
-apt-get install sudo telnet -y
+apt-get install sudo telnet bzip2 -y
 
 # Create non-privileged user for TS3 server, and moves home directory under /etc
 adduser --disabled-login --gecos "" ts3
@@ -43,14 +43,14 @@ usermod -md /etc/ts3/ ts3
 
 # Get OS Arch and download correct packages
 if [ "$(arch)" != 'x86_64' ]; then
-    wget http://dl.4players.de/ts/releases/3.0.11.4/teamspeak3-server_linux-x86-3.0.11.4.tar.gz -P /etc/ts3/
+    wget http://dl.4players.de/ts/releases/3.0.12/teamspeak3-server_linux_amd64-3.0.12.tar.bz2 -P /etc/ts3/
 else
-    wget http://dl.4players.de/ts/releases/3.0.11.4/teamspeak3-server_linux-amd64-3.0.11.4.tar.gz -P /etc/ts3/
+    wget http://dl.4players.de/ts/releases/3.0.12/teamspeak3-server_linux_amd64-3.0.12.tar.bz2 -P /etc/ts3/
 fi
 
 # Extract the contents and give correct ownership to the files and folders
-tar -xvzf /etc/ts3/teamspeak3-server_linux*.tar.gz --strip 1 -C /etc/ts3/
-rm -f /etc/ts3/teamspeak3-server_linux*.tar.gz
+bzip2 -dc /etc/ts3/teamspeak3-server_linux*.tar.bz2 | tar -xvf - --strip 1 -C /etc/ts3/
+rm -f /etc/ts3/teamspeak3-server_linux*.tar.bz2
 chown -R ts3:ts3 /etc/ts3/
 
 # Create autostart script
