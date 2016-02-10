@@ -21,5 +21,5 @@ No. Only the barebone server will be installed, no license will be included. You
 If you need to upload your own license, you can upload your "licensekey.dat" to ```/etc/ts3/``` and enter command ```/etc/init.d/teamspeak3 restart``` for the new license key to take effect.
 
 ### More info please.
-Current TeamSpeak 3 server version: 3.0.12<br />
+Current TeamSpeak 3 server version: 3.0.12.1<br />
 Tested on Debian 7/8 and Ubuntu 14.04 LTS
