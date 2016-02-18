@@ -43,9 +43,9 @@ usermod -md /etc/ts3/ ts3
 
 # Get OS Arch and download correct packages
 if [ "$(arch)" != 'x86_64' ]; then
-    wget http://dl.4players.de/ts/releases/3.0.12.1/teamspeak3-server_linux_x86-3.0.12.1.tar.bz2 -P /etc/ts3/
+    wget http://dl.4players.de/ts/releases/3.0.12.2/teamspeak3-server_linux_x86-3.0.12.2.tar.bz2 -P /etc/ts3/
 else
-    wget http://dl.4players.de/ts/releases/3.0.12.1/teamspeak3-server_linux_amd64-3.0.12.1.tar.bz2 -P /etc/ts3/
+    wget http://dl.4players.de/ts/releases/3.0.12.2/teamspeak3-server_linux_amd64-3.0.12.2.tar.bz2 -P /etc/ts3/
 fi
 
 # Extract the contents and give correct ownership to the files and folders
