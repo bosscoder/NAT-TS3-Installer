@@ -55,31 +55,33 @@ chown -R ts3:ts3 /etc/ts3/
 
 # Create autostart script
 touch /etc/init.d/teamspeak3
-echo '#!/bin/sh' > /etc/init.d/teamspeak3
-echo '### BEGIN INIT INFO' >> /etc/init.d/teamspeak3
-echo '# Provides:          teamspeak' >> /etc/init.d/teamspeak3
-echo '# Required-Start:    networking' >> /etc/init.d/teamspeak3
-echo '# Required-Stop:' >> /etc/init.d/teamspeak3
-echo '# Default-Start:     2 3 4 5' >> /etc/init.d/teamspeak3
-echo '# Default-Stop:      S 0 1 6' >> /etc/init.d/teamspeak3
-echo '# Short-Description: TeamSpeak 3 Server Daemon' >> /etc/init.d/teamspeak3
-echo '# Description:       Starts/Stops/Restarts the TeamSpeak 3 Server Daemon' >> /etc/init.d/teamspeak3
-echo '### END INIT INFO' >> /etc/init.d/teamspeak3
-echo '' >> /etc/init.d/teamspeak3
-echo 'set -e' >> /etc/init.d/teamspeak3
-echo '' >> /etc/init.d/teamspeak3
-echo 'PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin' >> /etc/init.d/teamspeak3
-echo 'DESC="TeamSpeak 3 Server"' >> /etc/init.d/teamspeak3
-echo 'NAME=ts3' >> /etc/init.d/teamspeak3
-echo 'USER=ts3' >> /etc/init.d/teamspeak3
-echo 'DIR=/etc/ts3/' >> /etc/init.d/teamspeak3
-echo 'DAEMON=$DIR/ts3server_startscript.sh' >> /etc/init.d/teamspeak3
-echo 'SCRIPTNAME=/etc/init.d/$NAME' >> /etc/init.d/teamspeak3
-echo '' >> /etc/init.d/teamspeak3
-echo 'test -x $DAEMON || exit 0' >> /etc/init.d/teamspeak3
-echo '' >> /etc/init.d/teamspeak3
-echo 'cd $DIR' >> /etc/init.d/teamspeak3
-echo 'sudo -u ts3 ./ts3server_startscript.sh $1' >> /etc/init.d/teamspeak3
+cat > /etc/init.d/teamspeak3 <<'EOF'
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          teamspeak
+# Required-Start:    networking
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      S 0 1 6
+# Short-Description: TeamSpeak 3 Server Daemon
+# Description:       Starts/Stops/Restarts the TeamSpeak 3 Server Daemon
+### END INIT INFO
+
+set -e
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+DESC="TeamSpeak 3 Server"
+NAME=ts3
+USER=ts3
+DIR=/etc/ts3/
+DAEMON=$DIR/ts3server_startscript.sh
+SCRIPTNAME=/etc/init.d/$NAME
+
+test -x $DAEMON || exit 0
+
+cd $DIR
+sudo -u ts3 ./ts3server_startscript.sh $1
+EOF
 chmod 755 /etc/init.d/teamspeak3
 
 # Assign right ports and password to TS3 server
