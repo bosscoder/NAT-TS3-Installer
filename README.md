@@ -6,6 +6,9 @@ To install TeamSpeak 3 automatically, run this command and follow the prompt.
 
 ``` wget http://git.io/nat_ts3 --no-check-certificate -O /tmp/nat_ts3.sh && bash /tmp/nat_ts3.sh```
 
+### Requirements
+This script will only work on OpenVZ container based VPS due to the fact it only checks for venet ethernet adapter. You can modify the code of this script before you run it if you want to install on a KVM/Xen VPS.
+
 ### Will this script work with VPS with dedicated IPs (all ports available)?
 Yes, everything will work! Just use 9987 (default port) as your voice server port and 30033 as your file transfer port. Of course if you want custom ports, you can set them to whatever you want as long as you have access to those ports and are opened in your firewall rules.
 
