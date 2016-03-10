@@ -24,5 +24,5 @@ No. Only the barebone server will be installed, no license will be included. You
 If you need to upload your own license, you can upload your "licensekey.dat" to ```/etc/ts3/``` and enter command ```/etc/init.d/teamspeak3 restart``` for the new license key to take effect.
 
 ### More info please.
-This script uses init.d.
+This script uses init.d.<br />
 Tested on Debian 7/8 and Ubuntu 14.04 LTS
