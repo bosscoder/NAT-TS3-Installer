@@ -39,19 +39,19 @@ apt-get install sudo telnet bzip2 -y
 
 # Create non-privileged user for TS3 server, and moves home directory under /etc
 adduser --disabled-login --gecos "" ts3
-usermod -md /etc/ts3/ ts3
+usermod -md /opt/ts3/ ts3
 
 # Get OS Arch and download correct packages
 if [ "$(arch)" != 'x86_64' ]; then
-    wget http://dl.4players.de/ts/releases/3.0.12.3/teamspeak3-server_linux_x86-3.0.12.3.tar.bz2 -P /etc/ts3/
+    wget http://dl.4players.de/ts/releases/3.0.12.3/teamspeak3-server_linux_x86-3.0.12.3.tar.bz2 -P /opt/ts3/
 else
-    wget http://dl.4players.de/ts/releases/3.0.12.3/teamspeak3-server_linux_amd64-3.0.12.3.tar.bz2 -P /etc/ts3/
+    wget http://dl.4players.de/ts/releases/3.0.12.3/teamspeak3-server_linux_amd64-3.0.12.3.tar.bz2 -P /opt/ts3/
 fi
 
 # Extract the contents and give correct ownership to the files and folders
-bzip2 -dc /etc/ts3/teamspeak3-server_linux*.tar.bz2 | tar -xvf - --strip 1 -C /etc/ts3/
-rm -f /etc/ts3/teamspeak3-server_linux*.tar.bz2
-chown -R ts3:ts3 /etc/ts3/
+bzip2 -dc /opt/ts3/teamspeak3-server_linux*.tar.bz2 | tar -xvf - --strip 1 -C /opt/ts3/
+rm -f /opt/ts3/teamspeak3-server_linux*.tar.bz2
+chown -R ts3:ts3 /opt/ts3/
 
 # Create autostart script
 touch /etc/init.d/teamspeak3
@@ -73,7 +73,7 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DESC="TeamSpeak 3 Server"
 NAME=ts3
 USER=ts3
-DIR=/etc/ts3/
+DIR=/opt/ts3/
 DAEMON=$DIR/ts3server_startscript.sh
 SCRIPTNAME=/etc/init.d/$NAME
 
@@ -85,7 +85,7 @@ EOF
 chmod 755 /etc/init.d/teamspeak3
 
 # Assign right ports and password to TS3 server
-sed -i "s/{2}/{4} default_voice_port=$vport filetransfer_port=$fport filetransfer_ip=0.0.0.0 serveradmin_password=$apass/" /etc/ts3/ts3server_startscript.sh
+sed -i "s/{2}/{4} default_voice_port=$vport filetransfer_port=$fport filetransfer_ip=0.0.0.0 serveradmin_password=$apass/" /opt/ts3/ts3server_startscript.sh
 
 # Set TS3 server to auto start on system boot
 update-rc.d teamspeak3 defaults
