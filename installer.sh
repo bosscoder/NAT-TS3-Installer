@@ -102,6 +102,7 @@ read -p "Start the server now? [y/n]: " startopt
 sleep 1
 if [ "$startopt" == "y" ] || [ "$startopt" == "yes" ]; then
   echo "Please keep the following details safe!"
+  sleep 2
   /etc/init.d/teamspeak3 start
 else
   echo "Run the following command to manually start the server:"
