@@ -1,6 +1,5 @@
 #!/bin/bash
 # Easy TeamSpeak 3 installer for Debian based OS
-# TeamSpeak 3 server version 3.0.12.3
 # Tested on Debian 7/8 and Ubuntu 14.04 LTS
 
 # Check for root account
@@ -15,17 +14,26 @@ if [ -e '/etc/redhat-release' ] ; then
   exit 1
 fi
 
+# Get latest TS3 server version
+wget 'http://dl.4players.de/ts/releases/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > STABLE_RELEASES.txt
+
+while read ts3version; do
+  if [[ "${ts3version}" =~ ^[3-9]+\.[0-9]+\.1[2-9]+\.?[0-9]*$ ]]; then
+    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux_amd64-${ts3version}.tar.bz2
+  else
+    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux-amd64-${ts3version}.tar.gz
+  fi
+  if [[ $? == 0 ]]; then
+    break
+  fi
+done < STABLE_RELEASES.txt
+rm -f STABLE_RELEASES.txt
+
 # Get the internal IP of the server
-ifconfig | grep venet0:0 -A 1 | grep inet | awk '{print $2}' | sed -e 's/addr://g' > private_ip
-pvtipfile=private_ip
-read -d $'\x04' pvtip < "$pvtipfile"
-rm -f private_ip
+pvtip=$( ifconfig  | grep 'inet addr:'| grep -v '127.0.0*' | cut -d ':' -f2 | awk '{ print $1}' )
 
 # Get the external public IP of the server
-wget http://ipinfo.io/ip -qO public_ip
-pubipfile=public_ip
-read -d $'\x04' pubip < "$pubipfile"
-rm -f public_ip
+pubip=$( wget -qO- http://ipinfo.io/ip )
 
 # Gives user the internal ip for reference and ask for desired ports
 echo "Your private internal IP is: $pvtip"
@@ -38,14 +46,13 @@ apt-get update
 apt-get install sudo telnet bzip2 -y
 
 # Create non-privileged user for TS3 server, and moves home directory under /etc
-adduser --disabled-login --gecos "" ts3
-usermod -md /opt/ts3/ ts3
+adduser --disabled-login --gecos "ts3server" ts3
 
 # Get OS Arch and download correct packages
 if [ "$(arch)" != 'x86_64' ]; then
-    wget http://dl.4players.de/ts/releases/3.0.12.3/teamspeak3-server_linux_x86-3.0.12.3.tar.bz2 -P /opt/ts3/
+    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
 else
-    wget http://dl.4players.de/ts/releases/3.0.12.3/teamspeak3-server_linux_amd64-3.0.12.3.tar.bz2 -P /opt/ts3/
+    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
 fi
 
 # Extract the contents and give correct ownership to the files and folders
