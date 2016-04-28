@@ -21,7 +21,7 @@ Check out the <a href="http://lowendspirit.com/locations.html" target="_blank">L
 
 ### Does my server have a license?
 No. Only the barebone server will be installed, no license will be included. You can, however, use the server as is for personal usage, up to 32 concurrent clients.<br />
-If you need to upload your own license, you can upload your "licensekey.dat" to ```/etc/ts3/``` and enter command ```/etc/init.d/teamspeak3 restart``` for the new license key to take effect.
+If you need to upload your own license, you can upload your "licensekey.dat" to ```/opt/ts3/``` and enter command ```/etc/init.d/teamspeak3 restart``` for the new license key to take effect.
 
 ### More info please.
 This script uses init.d.<br />
