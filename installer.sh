@@ -15,8 +15,11 @@ if [ -e '/etc/redhat-release' ] ; then
 fi
 
 # Get latest TS3 server version
-wget 'http://dl.4players.de/ts/releases/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > STABLE_RELEASES.txt
-
+echo "-------------------------------------------------------"
+echo "Detecting latest TeamSpeak 3 version, please wait..."
+echo "-------------------------------------------------------"
+echo ""
+wget 'http://dl.4players.de/ts/releases/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > TS3V
 while read ts3version; do
   if [[ "${ts3version}" =~ ^[3-9]+\.[0-9]+\.1[2-9]+\.?[0-9]*$ ]]; then
     wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux_amd64-${ts3version}.tar.bz2
@@ -26,8 +29,15 @@ while read ts3version; do
   if [[ $? == 0 ]]; then
     break
   fi
-done < STABLE_RELEASES.txt
-rm -f STABLE_RELEASES.txt
+done < TS3V
+rm -f TS3V
+
+# Get OS Arch and download correct packages
+if [ "$(arch)" != 'x86_64' ]; then
+    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
+else
+    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
+fi
 
 # Get the internal IP of the server
 pvtip=$( ifconfig  | grep 'inet addr:'| grep -v '127.0.0*' | cut -d ':' -f2 | awk '{ print $1}' )
@@ -48,24 +58,20 @@ apt-get install sudo telnet bzip2 -y
 # Create non-privileged user for TS3 server, and moves home directory under /etc
 adduser --disabled-login --gecos "ts3server" ts3
 
-# Get OS Arch and download correct packages
-if [ "$(arch)" != 'x86_64' ]; then
-    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
-else
-    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
-fi
-
 # Extract the contents and give correct ownership to the files and folders
-bzip2 -dc /opt/ts3/teamspeak3-server_linux*.tar.bz2 | tar -xvf - --strip 1 -C /opt/ts3/
+echo "------------------------------------------------------"
+echo "Extracting TeamSpeak 3 Server Files, please wait..."
+echo "------------------------------------------------------"
+echo ""
+tar -xjf /opt/ts3/teamspeak3-server_linux*.tar.bz2 --strip 1 -C /opt/ts3/
 rm -f /opt/ts3/teamspeak3-server_linux*.tar.bz2
 chown -R ts3:ts3 /opt/ts3/
 
 # Create autostart script
-touch /etc/init.d/teamspeak3
-cat > /etc/init.d/teamspeak3 <<'EOF'
+cat > /etc/init.d/teamspeak3 <<"EOF"
 #!/bin/sh
 ### BEGIN INIT INFO
-# Provides:          teamspeak
+# Provides:          TeamSpeak 3 Server
 # Required-Start:    networking
 # Required-Stop:
 # Default-Start:     2 3 4 5
