@@ -18,7 +18,6 @@ fi
 echo "-------------------------------------------------------"
 echo "Detecting latest TeamSpeak 3 version, please wait..."
 echo "-------------------------------------------------------"
-echo ""
 wget 'http://dl.4players.de/ts/releases/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > TS3V
 while read ts3version; do
   if [[ "${ts3version}" =~ ^[3-9]+\.[0-9]+\.1[2-9]+\.?[0-9]*$ ]]; then
@@ -62,7 +61,6 @@ adduser --disabled-login --gecos "ts3server" ts3
 echo "------------------------------------------------------"
 echo "Extracting TeamSpeak 3 Server Files, please wait..."
 echo "------------------------------------------------------"
-echo ""
 tar -xjf /opt/ts3/teamspeak3-server_linux*.tar.bz2 --strip 1 -C /opt/ts3/
 rm -f /opt/ts3/teamspeak3-server_linux*.tar.bz2
 chown -R ts3:ts3 /opt/ts3/
