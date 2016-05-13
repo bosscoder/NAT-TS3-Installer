@@ -47,7 +47,7 @@ pubip=$( wget -qO- http://ipinfo.io/ip )
 # Gives user the internal ip for reference and ask for desired ports
 echo "Your private internal IP is: $pvtip"
 read -p "Enter desired Voice Server port: " vport
-read -p "Enter desired Servery Query port: " qport
+read -p "Enter desired Server Query port: " qport
 read -p "Enter desired File Transfer port: " fport
 read -p "Enter desired Server Query Admin password: " apass
 
