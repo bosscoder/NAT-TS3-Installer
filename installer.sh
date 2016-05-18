@@ -46,14 +46,51 @@ pubip=$( wget -qO- http://ipinfo.io/ip )
 
 # Gives user the internal ip for reference and ask for desired ports
 echo "Your private internal IP is: $pvtip"
-read -p "Enter desired Voice Server port: " vport
-read -p "Enter desired Server Query port: " qport
-read -p "Enter desired File Transfer port: " fport
-read -p "Enter desired Server Query Admin password: " apass
+read -p "Enter Voice Server port [9987]: " vport
+while true; do
+  if [[ "$vport" == "" ]]; then
+    vport="9987"
+    break
+  elif ! [[ "$vport" =~ ^[0-9]+$ ]] || [[ "$vport" -lt "1" ]] || [[ "$vport" -gt "65535" ]]; then
+    echo "Voice Server port invalid."
+    read -p "Enter Voice Server port [9987]: " vport
+  else
+    break
+  fi
+done
+
+read -p "Enter File Transfer port [30033]: " fport
+while true; do
+  if [[ "$fport" == "" ]]; then
+    vport="30033"
+    break
+  elif ! [[ "$fport" =~ ^[0-9]+$ ]] || [[ "$fport" -lt "1" ]] || [[ "$fport" -gt "65535" ]]; then
+    echo "File Transfer port invalid."
+    read -p "Enter File Transfer port [30033]: " fport
+  else
+    break
+  fi
+done
+
+read -p "Enter Server Query port [10011]: " qport
+while true; do
+  if [[ "$qport" == "" ]]; then
+    vport="10011"
+    break
+  elif ! [[ "$qport" =~ ^[0-9]+$ ]] || [[ "$qport" -lt "1" ]] || [[ "$qport" -gt "65535" ]]; then
+    echo "Server Query port invalid."
+    read -p "Enter Server Query port [10011]: " qport
+  else
+    break
+  fi
+done
+
+read -p "Enter Server Query Admin password: " apass
+
 
 # Install required packages
 apt-get update
-apt-get install sudo telnet bzip2 -y
+apt-get install -y sudo telnet bzip2
 
 # Create non-privileged user for TS3 server, and moves home directory under /etc
 adduser --disabled-login --gecos "ts3server" ts3
@@ -74,7 +111,7 @@ cat > /etc/init.d/teamspeak3 <<"EOF"
 # Required-Start:    networking
 # Required-Stop:
 # Default-Start:     2 3 4 5
-# Default-Stop:      S 0 1 6
+# Default-Stop:      0 1 6
 # Short-Description: TeamSpeak 3 Server Daemon
 # Description:       Starts/Stops/Restarts the TeamSpeak 3 Server Daemon
 ### END INIT INFO
