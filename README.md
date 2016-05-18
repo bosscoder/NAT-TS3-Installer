@@ -43,6 +43,12 @@ Get a cheap yearly VPS from one of these awesome providers, starting from $2 ann
 * Maidenhead, UK
 
 ##### <a href="https://clients.gestiondbi.com/index.php?/cart/lowendspirit-nat-vps/&step=0&currency=1" target="_blank">Deepnet Solutions - as low as $2.50/year</a>
+* Montreal, CA
+* New Jersey, US
+* Hong Kong, CN
+* Johannesburg, ZA
+
+##### <a href="https://quadhost.net/account/cart.php?gid=19" target="_blank">i-38 - as low as £2.50/year</a>
 * London, UK
 * Roubaix, FR
 * Varna, BG
@@ -50,9 +56,6 @@ Get a cheap yearly VPS from one of these awesome providers, starting from $2 ann
 * North Carolina, US
 * Singapore, SG
 * New Delhi, IN
-
-##### <a href="https://quadhost.net/account/cart.php?gid=19" target="_blank">i-38 - as low as £2.50/year</a>
-* Sydney, AU
 
 ##### <a href="https://secure.ransomit.com.au/console/cart.php?a=add&pid=104" target="_blank">RansomIT - as low as $4.50/year</a>
 * Sydney, AU
