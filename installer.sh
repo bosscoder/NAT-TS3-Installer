@@ -145,7 +145,8 @@ echo ""
 clear
 echo "TeamSpeak 3 has been successfully installed!"
 echo "Voice server is available at $pubip:$vport"
-echo "Your file transfer port is: $fport"
+echo "The file transfer port is: $fport"
+echo "The server query port is: $qport"
 echo ""
 read -p "Start the server now? [y/n]: " startopt
 sleep 1
