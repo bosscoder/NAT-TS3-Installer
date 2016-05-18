@@ -53,7 +53,7 @@ while true; do
     break
   elif ! [[ "$vport" =~ ^[0-9]+$ ]] || [[ "$vport" -lt "1" ]] || [[ "$vport" -gt "65535" ]]; then
     echo "Voice Server port invalid."
-    read -p "Enter Voice Server port [9987]: " vport
+    read -p "Re-enter Voice Server port [9987]: " vport
   else
     break
   fi
@@ -62,11 +62,11 @@ done
 read -p "Enter File Transfer port [30033]: " fport
 while true; do
   if [[ "$fport" == "" ]]; then
-    vport="30033"
+    fport="30033"
     break
   elif ! [[ "$fport" =~ ^[0-9]+$ ]] || [[ "$fport" -lt "1" ]] || [[ "$fport" -gt "65535" ]]; then
     echo "File Transfer port invalid."
-    read -p "Enter File Transfer port [30033]: " fport
+    read -p "Re-enter File Transfer port [30033]: " fport
   else
     break
   fi
@@ -75,19 +75,20 @@ done
 read -p "Enter Server Query port [10011]: " qport
 while true; do
   if [[ "$qport" == "" ]]; then
-    vport="10011"
+    qport="10011"
     break
   elif ! [[ "$qport" =~ ^[0-9]+$ ]] || [[ "$qport" -lt "1" ]] || [[ "$qport" -gt "65535" ]]; then
     echo "Server Query port invalid."
-    read -p "Enter Server Query port [10011]: " qport
+    read -p "Re-enter Server Query port [10011]: " qport
   else
     break
   fi
 done
 
 read -p "Enter Server Query Admin password: " apass
-
-
+if [[ "$apass" == "" ]]; then
+  apass=$( cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1 )
+fi
 # Install required packages
 apt-get update
 apt-get install -y sudo telnet bzip2
