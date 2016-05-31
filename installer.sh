@@ -14,30 +14,6 @@ if [ -e '/etc/redhat-release' ] ; then
   exit 1
 fi
 
-# Get latest TS3 server version
-echo "-------------------------------------------------------"
-echo "Detecting latest TeamSpeak 3 version, please wait..."
-echo "-------------------------------------------------------"
-wget 'http://dl.4players.de/ts/releases/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > TS3V
-while read ts3version; do
-  if [[ "${ts3version}" =~ ^[3-9]+\.[0-9]+\.1[2-9]+\.?[0-9]*$ ]]; then
-    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux_amd64-${ts3version}.tar.bz2
-  else
-    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux-amd64-${ts3version}.tar.gz
-  fi
-  if [[ $? == 0 ]]; then
-    break
-  fi
-done < TS3V
-rm -f TS3V
-
-# Get OS Arch and download correct packages
-if [ "$(arch)" != 'x86_64' ]; then
-    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
-else
-    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
-fi
-
 # Get the internal IP of the server
 pvtip=$( ifconfig  | grep 'inet addr:'| grep -v '127.0.0*' | cut -d ':' -f2 | awk '{ print $1}' )
 
@@ -85,10 +61,36 @@ while true; do
   fi
 done
 
-read -p "Enter Server Query Admin password: " apass
+rapass=$( cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1 )
+read -p "Enter Server Query Admin password: [$rapass]" apass
 if [[ "$apass" == "" ]]; then
-  apass=$( cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1 )
+  apass=$rapass
 fi
+
+# Get latest TS3 server version
+echo "-------------------------------------------------------"
+echo "Detecting latest TeamSpeak 3 version, please wait..."
+echo "-------------------------------------------------------"
+wget 'http://dl.4players.de/ts/releases/?C=M;O=D' -q -O - | grep -i dir | grep -Eo '<a href=\".*\/\">.*\/<\/a>' | grep -Eo '[0-9\.?]+' | uniq | sort -V -r > TS3V
+while read ts3version; do
+  if [[ "${ts3version}" =~ ^[3-9]+\.[0-9]+\.1[2-9]+\.?[0-9]*$ ]]; then
+    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux_amd64-${ts3version}.tar.bz2
+  else
+    wget --spider -q http://dl.4players.de/ts/releases/${ts3version}/teamspeak3-server_linux-amd64-${ts3version}.tar.gz
+  fi
+  if [[ $? == 0 ]]; then
+    break
+  fi
+done < TS3V
+rm -f TS3V
+
+# Get OS Arch and download correct packages
+if [ "$(arch)" != 'x86_64' ]; then
+    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_x86-"$ts3version".tar.bz2" -P /opt/ts3/
+else
+    wget "http://dl.4players.de/ts/releases/"$ts3version"/teamspeak3-server_linux_amd64-"$ts3version".tar.bz2" -P /opt/ts3/
+fi
+
 # Install required packages
 apt-get update
 apt-get install -y sudo telnet bzip2
