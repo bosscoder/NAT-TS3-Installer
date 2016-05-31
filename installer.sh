@@ -62,7 +62,7 @@ while true; do
 done
 
 rapass=$( cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 8 | head -n 1 )
-read -p "Enter Server Query Admin password: [$rapass]" apass
+read -p "Enter Server Query Admin password [$rapass]: " apass
 if [[ "$apass" == "" ]]; then
   apass=$rapass
 fi
