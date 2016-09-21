@@ -22,17 +22,6 @@ If you need to upload your own license, you can upload your "licensekey.dat" to 
 ### Where do I get a server?
 This script will run on any vps server as long as it has root and ipv4 access. VPS with NAT'd IPv4 works just as well.<br />
 Get a cheap yearly VPS from one of these awesome providers, starting from $2 annually.
-##### <a href="https://my.virtwire.com/cart.php?gid=37" target="_blank">VirtWire - as low as $2/year</a>
-* Lenoir, US
-* Los Angeles, US
-* Kansas City, US
-* Düsseldorf, DE
-* Falkenstein, DE
-* Strasbourg, FR
-* Stockholm, SE
-* St. Peterburg, RU
-* Auckland, NZ
-
 ##### <a href="https://clients.inceptionhosting.com/cart.php?gid=13&currency=3" target="_blank">Inception Hosting - as low as $2.25/year</a>
 * Dallas, US
 * Milan, IT
