@@ -4,7 +4,7 @@ This installer will automatically install TeamSpeak 3 onto your NAT VPS, and aut
 ### How do I install?
 To install TeamSpeak 3 automatically, run this command and follow the prompt.
 
-``` wget http://git.io/nat_ts3 --no-check-certificate -O /tmp/nat_ts3.sh && bash /tmp/nat_ts3.sh```
+``wget http://git.io/nat_ts3 --no-check-certificate -O /tmp/nat_ts3.sh && bash /tmp/nat_ts3.sh``
 
 ### Requirements
 This script will only work on OpenVZ container based VPS due to the fact it only checks for venet ethernet adapter. You can modify the code of this script before you run it if you want to install on a KVM/Xen VPS.
