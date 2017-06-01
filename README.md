@@ -37,15 +37,6 @@ Get a cheap yearly VPS from one of these awesome providers, starting from $2 ann
 * Hong Kong, CN
 * Johannesburg, ZA
 
-##### <a href="https://quadhost.net/account/cart.php?gid=19" target="_blank">i-38 - as low as £2.50/year</a>
-* London, UK
-* Roubaix, FR
-* Varna, BG
-* Falkenstein, DE
-* North Carolina, US
-* Singapore, SG
-* New Delhi, IN
-
 ##### <a href="https://secure.ransomit.com.au/console/cart.php?a=add&pid=104" target="_blank">RansomIT - as low as $4.50/year</a>
 * Sydney, AU
 
